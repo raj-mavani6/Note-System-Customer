@@ -1,0 +1,84 @@
+<!-- Admin Header -->
+<header class="main-header admin-header">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid px-4">
+            <!-- Brand Logo -->
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-journal-richtext brand-icon"></i>
+                <span class="brand-text">Notes<span class="brand-accent">System</span></span>
+                <span class="admin-badge">Admin</span>
+            </a>
+
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                @if (Context.Session.GetInt32("AdminId") != null)
+                {
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Users" asp-action="Index">
+                                <i class="bi bi-people"></i> Users
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Notes" asp-action="Index">
+                                <i class="bi bi-journal-text"></i> Notes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Analytics" asp-action="Index">
+                                <i class="bi bi-graph-up"></i> Analytics
+                            </a>
+                        </li>
+                    </ul>
+                }
+
+                <!-- Right Side Navigation -->
+                <ul class="navbar-nav ms-auto">
+                    <!-- Theme Toggle -->
+                    <li class="nav-item">
+                        <button class="btn theme-toggle" id="themeToggle" title="Toggle Theme">
+                            <i class="bi bi-moon-fill" id="themeIcon"></i>
+                        </button>
+                    </li>
+
+                    @if (Context.Session.GetInt32("AdminId") != null)
+                    {
+                        <!-- Admin Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle user-dropdown" href="#" data-bs-toggle="dropdown">
+                                <div class="admin-avatar">
+                                    <i class="bi bi-person-circle"></i>
+                                </div>
+                                <span>@Context.Session.GetString("AdminName")</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li class="dropdown-header">
+                                    <strong>@Context.Session.GetString("AdminName")</strong>
+                                    <small class="text-muted d-block">@Context.Session.GetString("AdminRole")</small>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index"><i class="bi bi-person"></i> My Profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="Users" asp-action="Index"><i class="bi bi-people"></i> Manage Users</a></li>
+                                <li><a class="dropdown-item" asp-controller="Notes" asp-action="Index"><i class="bi bi-journal-text"></i> Manage Notes</a></li>
+                                <li><a class="dropdown-item" asp-controller="Analytics" asp-action="Index"><i class="bi bi-graph-up"></i> Analytics</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" asp-controller="Account" asp-action="Logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+

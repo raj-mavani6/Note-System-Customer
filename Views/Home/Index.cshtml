@@ -1,0 +1,180 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- Dashboard Section -->
+<section class="dashboard-section">
+    <div class="container-fluid px-4">
+        <!-- Welcome Header -->
+        <div class="dashboard-header animate-fade-in">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="dashboard-title">
+                        Welcome back, <span class="text-accent">@ViewBag.AdminName</span>!
+                    </h1>
+                    <p class="dashboard-subtitle">Here's an overview of your notes platform</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <span class="dashboard-date">
+                        <i class="bi bi-calendar3"></i> @DateTime.Now.ToString("dddd, MMMM dd, yyyy")
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-4">
+            <!-- Total Users -->
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon users">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.TotalUsers</h3>
+                        <p class="stat-label">Total Users</p>
+                    </div>
+                    <a asp-controller="Users" asp-action="Index" class="stat-link"><i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Total Notes -->
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon notes">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.TotalNotes</h3>
+                        <p class="stat-label">Total Notes</p>
+                    </div>
+                    <a asp-controller="Notes" asp-action="Index" class="stat-link"><i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Active Users -->
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon active">
+                        <i class="bi bi-person-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.ActiveUsers</h3>
+                        <p class="stat-label">Active Users</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today Notes -->
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon storage">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.TodayNotes</h3>
+                        <p class="stat-label">Today's Notes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h5><i class="bi bi-lightning-charge"></i> Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <a asp-controller="Users" asp-action="Create" class="action-card">
+                                    <i class="bi bi-person-plus"></i>
+                                    <span>Add New User</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a asp-controller="Users" asp-action="Index" class="action-card">
+                                    <i class="bi bi-people"></i>
+                                    <span>View All Users</span>
+                                </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a asp-controller="Notes" asp-action="Index" class="action-card">
+                                    <i class="bi bi-journal-text"></i>
+                                    <span>View All Notes</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Notes -->
+                <div class="dashboard-card animate-fade-in mt-4">
+                    <div class="card-header">
+                        <h5><i class="bi bi-journal-text"></i> Recent Notes</h5>
+                        <a asp-controller="Notes" asp-action="Index" class="btn btn-sm btn-outline-primary">View All</a>
+                    </div>
+                    <div class="card-body">
+                        @if (ViewBag.RecentNotes != null && ((IEnumerable<dynamic>)ViewBag.RecentNotes).Any())
+                        {
+                            <div class="activity-list">
+                                @foreach (var note in ViewBag.RecentNotes)
+                                {
+                                    <a href="/Notes/Details/@note.Id" class="activity-item">
+                                        <div class="activity-icon info">
+                                            <i class="bi bi-journal"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <p>@note.Title</p>
+                                            <small>by @(note.User?.FullName ?? "Unknown") - @note.CreatedAt.ToString("MMM dd, yyyy")</small>
+                                        </div>
+                                    </a>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center">No notes yet.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Users -->
+            <div class="col-lg-4">
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h5><i class="bi bi-people"></i> Recent Users</h5>
+                        <a href="/Users" class="btn btn-sm btn-outline-primary">View All</a>
+                    </div>
+                    <div class="card-body">
+                        @if (ViewBag.RecentUsers != null && ((IEnumerable<dynamic>)ViewBag.RecentUsers).Any())
+                        {
+                            <div class="activity-list">
+                                @foreach (var user in ViewBag.RecentUsers)
+                                {
+                                    <a href="/Users/Details/@user.Id" class="activity-item">
+                                        <div class="activity-icon success">
+                                            <i class="bi bi-person"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <p>@user.FullName</p>
+                                            <small>@user.Email</small>
+                                        </div>
+                                    </a>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center">No users yet.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

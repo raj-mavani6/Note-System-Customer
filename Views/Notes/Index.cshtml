@@ -1,0 +1,122 @@
+@model IEnumerable<Note>
+@{
+    ViewData["Title"] = "Manage Notes";
+}
+
+<section class="admin-notes-section">
+    <div class="container-fluid px-4">
+        <!-- Page Header -->
+        <div class="admin-page-header animate-fade-in">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="admin-page-title">
+                        <i class="bi bi-journal-text"></i> Manage Notes
+                    </h1>
+                    <p class="admin-page-subtitle">View and manage all user notes in the system</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <span class="badge bg-primary fs-6">
+                        <i class="bi bi-journal-text"></i> @Model.Count() Total Notes
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Table -->
+        <div class="dashboard-card animate-fade-in">
+            <div class="card-header">
+                <h5><i class="bi bi-table"></i> All Notes</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>User</th>
+                                    <th>Important</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var note in Model)
+                                {
+                                    <tr>
+                                        <td><strong>#@note.Id</strong></td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(note.ImageUrl))
+                                            {
+                                                <img src="@note.ImageUrl" alt="@note.Title" class="table-image" />
+                                            }
+                                            else
+                                            {
+                                                <span class="no-image"><i class="bi bi-image"></i></span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <strong>@note.Title</strong>
+                                            <br>
+                                            <small class="text-muted">@(note.Content.Length > 50 ? note.Content.Substring(0, 50) + "..." : note.Content)</small>
+                                        </td>
+                                        <td>
+                                            @if (note.User != null)
+                                            {
+                                                <span class="user-badge">
+                                                    <i class="bi bi-person-circle"></i> @note.User.FullName
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Unknown</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (note.IsImportant)
+                                            {
+                                                <span class="badge bg-warning">
+                                                    <i class="bi bi-star-fill"></i> Yes
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">No</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <span class="date-text">@note.CreatedAt.ToString("MMM dd, yyyy")</span>
+                                            <br>
+                                            <small class="text-muted">@note.CreatedAt.ToString("hh:mm tt")</small>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <a href="/Notes/Details/@note.Id" class="btn btn-sm btn-outline-primary" title="View Details">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="/Notes/Delete/@note.Id" class="btn btn-sm btn-outline-danger" title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <i class="bi bi-journal-x"></i>
+                        <h4>No Notes Found</h4>
+                        <p>There are no notes in the system yet.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

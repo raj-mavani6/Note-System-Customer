@@ -1,0 +1,89 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Admin Login";
+    Layout = "_Layout";
+}
+
+<section class="auth-section admin-auth">
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-80">
+            <div class="col-lg-5 col-md-7">
+                <div class="auth-card animate-fade-in">
+                    <!-- Admin Logo -->
+                    <div class="auth-logo">
+                        <div class="admin-logo-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        <h2>Notes<span class="text-accent">System</span></h2>
+                        <span class="admin-label">Admin Panel</span>
+                    </div>
+                    
+                    <!-- Title -->
+                    <div class="auth-header">
+                        <h3>Admin Login</h3>
+                        <p>Enter your credentials to access the dashboard</p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form asp-action="Login" method="post" class="auth-form">
+                        @Html.AntiForgeryToken()
+
+                        <!-- Validation Summary -->
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                @Html.ValidationSummary(false, "", new { @class = "mb-0" })
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <!-- Email Field -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Enter admin email">
+                            <label for="email"><i class="bi bi-envelope"></i> Admin Email</label>
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Enter password">
+                            <label for="password"><i class="bi bi-lock"></i> Password</label>
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Remember Me -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="bi bi-box-arrow-in-right"></i> Sign In to Dashboard
+                        </button>
+                    </form>
+
+                    <!-- Security Notice -->
+                    <div class="security-notice">
+                        <i class="bi bi-shield-check"></i>
+                        <span>This is a secure admin area. All activities are logged.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Form submission animation
+        document.querySelector('.auth-form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Authenticating...';
+            btn.disabled = true;
+        });
+    </script>
+}

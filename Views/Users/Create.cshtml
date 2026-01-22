@@ -1,0 +1,99 @@
+@model User
+@{
+    ViewData["Title"] = "Add New User";
+}
+
+<section class="admin-form-section">
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Page Header -->
+                <div class="form-header animate-fade-in">
+                    <a asp-controller="Users" asp-action="Index" class="back-link">
+                        <i class="bi bi-arrow-left"></i> Back to Users
+                    </a>
+                    <h1 class="admin-page-title">
+                        <i class="bi bi-person-plus"></i> Add New User
+                    </h1>
+                    <p class="admin-page-subtitle">Create a new user account</p>
+                </div>
+
+                <!-- Create Form -->
+                <div class="form-card animate-fade-in">
+                    <form asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="FullName" class="form-label">
+                                    <i class="bi bi-person"></i> Full Name <span class="required">*</span>
+                                </label>
+                                <input asp-for="FullName" class="form-control" placeholder="Enter full name">
+                                <span asp-validation-for="FullName" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="Email" class="form-label">
+                                    <i class="bi bi-envelope"></i> Email <span class="required">*</span>
+                                </label>
+                                <input asp-for="Email" class="form-control" placeholder="Enter email address">
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="Password" class="form-label">
+                                    <i class="bi bi-lock"></i> Password <span class="required">*</span>
+                                </label>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Enter password">
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="Phone" class="form-label">
+                                    <i class="bi bi-phone"></i> Phone (Optional)
+                                </label>
+                                <input asp-for="Phone" class="form-control" placeholder="Enter phone number">
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="ProfileImageUrl" class="form-label">
+                                <i class="bi bi-image"></i> Profile Image URL (Optional)
+                            </label>
+                            <input asp-for="ProfileImageUrl" class="form-control" placeholder="https://example.com/image.jpg">
+                            <small class="form-text text-muted">Enter a URL to the user's profile image</small>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check status-check">
+                                <input asp-for="IsActive" class="form-check-input" type="checkbox" id="isActive" checked>
+                                <label class="form-check-label" for="isActive">
+                                    <i class="bi bi-check-circle"></i> Account is Active
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-buttons">
+                            <a asp-controller="Users" asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-x-lg"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-check-lg"></i> Create User
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Creating...';
+            btn.disabled = true;
+        });
+    </script>
+}

@@ -1,0 +1,197 @@
+@{
+    ViewData["Title"] = "Storage Analytics";
+}
+
+<section class="analytics-section">
+    <div class="container-fluid px-4">
+        <!-- Page Header -->
+        <div class="admin-page-header animate-fade-in">
+            <a asp-action="Index" class="back-link">
+                <i class="bi bi-arrow-left"></i> Back to Analytics
+            </a>
+            <h1 class="admin-page-title">
+                <i class="bi bi-hdd-stack"></i> Storage Analytics
+            </h1>
+            <p class="admin-page-subtitle">Content size, note length, and media insights</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon storage">
+                        <i class="bi bi-hdd"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.TotalContentSizeKB KB</h3>
+                        <p class="stat-label">Total Content Size</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon notes">
+                        <i class="bi bi-text-paragraph"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.AverageNoteLength</h3>
+                        <p class="stat-label">Avg. Note Length (chars)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon active">
+                        <i class="bi bi-image"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.TotalImages</h3>
+                        <p class="stat-label">Total Images</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon users">
+                        <i class="bi bi-journals"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.TotalNotes</h3>
+                        <p class="stat-label">Total Notes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Content Length Distribution -->
+            <div class="col-lg-6">
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h5><i class="bi bi-bar-chart"></i> Content Length Distribution</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="distribution-bars">
+                            @{
+                                var total = (int)ViewBag.ShortNotes + (int)ViewBag.MediumNotes + (int)ViewBag.LongNotes;
+                            }
+                            <div class="dist-bar-item">
+                                <div class="dist-bar-info">
+                                    <span class="dist-label"><i class="bi bi-file-text"></i> Short (&lt;100 chars)</span>
+                                    <span class="dist-value">@ViewBag.ShortNotes</span>
+                                </div>
+                                <div class="dist-bar-container">
+                                    <div class="dist-bar short" style="width: @(total > 0 ? (ViewBag.ShortNotes * 100 / total) : 0)%"></div>
+                                </div>
+                            </div>
+                            <div class="dist-bar-item">
+                                <div class="dist-bar-info">
+                                    <span class="dist-label"><i class="bi bi-file-richtext"></i> Medium (100-500 chars)</span>
+                                    <span class="dist-value">@ViewBag.MediumNotes</span>
+                                </div>
+                                <div class="dist-bar-container">
+                                    <div class="dist-bar medium" style="width: @(total > 0 ? (ViewBag.MediumNotes * 100 / total) : 0)%"></div>
+                                </div>
+                            </div>
+                            <div class="dist-bar-item">
+                                <div class="dist-bar-info">
+                                    <span class="dist-label"><i class="bi bi-file-earmark-text"></i> Long (&gt;500 chars)</span>
+                                    <span class="dist-value">@ViewBag.LongNotes</span>
+                                </div>
+                                <div class="dist-bar-container">
+                                    <div class="dist-bar long" style="width: @(total > 0 ? (ViewBag.LongNotes * 100 / total) : 0)%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storage Summary -->
+            <div class="col-lg-6">
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h5><i class="bi bi-pie-chart"></i> Storage Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="storage-summary">
+                            <div class="storage-item">
+                                <div class="storage-icon">
+                                    <i class="bi bi-file-text"></i>
+                                </div>
+                                <div class="storage-info">
+                                    <h4>Text Content</h4>
+                                    <p>@ViewBag.TotalContentSize characters total</p>
+                                    <span class="storage-size">~@ViewBag.TotalContentSizeKB KB</span>
+                                </div>
+                            </div>
+                            <div class="storage-item">
+                                <div class="storage-icon">
+                                    <i class="bi bi-image"></i>
+                                </div>
+                                <div class="storage-info">
+                                    <h4>Images</h4>
+                                    <p>@ViewBag.TotalImages image URLs stored</p>
+                                    <span class="storage-size">External links</span>
+                                </div>
+                            </div>
+                            <div class="storage-item">
+                                <div class="storage-icon">
+                                    <i class="bi bi-journal-text"></i>
+                                </div>
+                                <div class="storage-info">
+                                    <h4>Average per Note</h4>
+                                    <p>@ViewBag.AverageNoteLength characters</p>
+                                    <span class="storage-size">~@(Math.Round((double)ViewBag.AverageNoteLength / 1024 * 1000, 1)) bytes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Longest Notes -->
+            <div class="col-12">
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h5><i class="bi bi-file-earmark-text"></i> Top Longest Notes</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (ViewBag.LongestNotes != null && ((IEnumerable<dynamic>)ViewBag.LongestNotes).Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Rank</th>
+                                            <th>Title</th>
+                                            <th>Author</th>
+                                            <th>Length</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ var noteRank = 1; }
+                                        @foreach (var note in ViewBag.LongestNotes)
+                                        {
+                                            <tr>
+                                                <td><span class="rank-badge rank-@noteRank">@noteRank</span></td>
+                                                <td><strong>@note.Title</strong></td>
+                                                <td>@note.UserName</td>
+                                                <td><span class="badge bg-primary">@note.Length chars</span></td>
+                                            </tr>
+                                            noteRank++;
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center">No notes available.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

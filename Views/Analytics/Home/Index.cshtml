@@ -1,0 +1,131 @@
+@{
+    ViewData["Title"] = "Analytics Dashboard";
+}
+
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+        <div>
+            <h1 class="mb-0">Analytics Dashboard</h1>
+            <p class="text-muted mb-0">Overview of system performance and statistics</p>
+        </div>
+        <div class="date-display">
+            <i class="bi bi-calendar3"></i> @DateTime.Now.ToString("MMMM dd, yyyy")
+        </div>
+    </div>
+
+    <!-- Quick Stats Row -->
+    <div class="row g-4 mb-4">
+        <div class="col-xl-4 col-md-6">
+            <div class="stat-card animate-fade-in delay-1">
+                <div class="stat-icon users">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">@ViewBag.TotalUsers</h3>
+                    <p class="stat-label">Total Users</p>
+                </div>
+                <div class="stat-footer">
+                    <span class="text-success"><i class="bi bi-caret-up-fill"></i> @ViewBag.NewUsersToday</span>
+                    <span class="text-muted ms-1">joined today</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-6">
+            <div class="stat-card animate-fade-in delay-2">
+                <div class="stat-icon notes">
+                    <i class="bi bi-journal-text"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">@ViewBag.TotalNotes</h3>
+                    <p class="stat-label">Total Notes</p>
+                </div>
+                <div class="stat-footer">
+                    <span class="text-success"><i class="bi bi-caret-up-fill"></i> @ViewBag.NotesToday</span>
+                    <span class="text-muted ms-1">created today</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-6">
+            <div class="stat-card animate-fade-in delay-3">
+                <div class="stat-icon active">
+                    <i class="bi bi-person-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-number">@ViewBag.ActiveUsers</h3>
+                    <p class="stat-label">Active Users</p>
+                </div>
+                <div class="stat-footer">
+                    <span class="text-muted">Targeting growth</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Sections Navigation -->
+    <h4 class="mb-3 text-muted">Detailed Reports</h4>
+    <div class="row g-4">
+        <!-- User Analytics -->
+        <div class="col-xl-3 col-md-6">
+            <a asp-controller="Analytics" asp-action="Users" class="text-decoration-none">
+                <div class="dashboard-card h-100 animate-fade-in hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="avatar-circle bg-primary-soft text-primary mb-3 mx-auto">
+                            <i class="bi bi-people fs-3"></i>
+                        </div>
+                        <h5 class="card-title text-body">User Analytics</h5>
+                        <p class="card-text text-muted small">Registration trends, active vs inactive users, and top contributors.</p>
+                        <span class="btn btn-outline-primary btn-sm mt-2">View Report <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Note Analytics -->
+        <div class="col-xl-3 col-md-6">
+            <a asp-controller="Analytics" asp-action="Notes" class="text-decoration-none">
+                <div class="dashboard-card h-100 animate-fade-in hover-lift delay-1">
+                    <div class="card-body text-center p-4">
+                        <div class="avatar-circle bg-info-soft text-info mb-3 mx-auto">
+                            <i class="bi bi-journal-text fs-3"></i>
+                        </div>
+                        <h5 class="card-title text-body">Note Analytics</h5>
+                        <p class="card-text text-muted small">Creation volume, content distribution, and usage patterns.</p>
+                        <span class="btn btn-outline-info btn-sm mt-2">View Report <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Activity Analytics -->
+        <div class="col-xl-3 col-md-6">
+            <a asp-controller="Analytics" asp-action="Activity" class="text-decoration-none">
+                <div class="dashboard-card h-100 animate-fade-in hover-lift delay-2">
+                    <div class="card-body text-center p-4">
+                        <div class="avatar-circle bg-warning-soft text-warning mb-3 mx-auto">
+                            <i class="bi bi-activity fs-3"></i>
+                        </div>
+                        <h5 class="card-title text-body">Activity Insights</h5>
+                        <p class="card-text text-muted small">Peak usage hours, daily trends, and system engagement.</p>
+                        <span class="btn btn-outline-warning btn-sm mt-2">View Report <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Storage Analytics -->
+        <div class="col-xl-3 col-md-6">
+            <a asp-controller="Analytics" asp-action="Storage" class="text-decoration-none">
+                <div class="dashboard-card h-100 animate-fade-in hover-lift delay-3">
+                    <div class="card-body text-center p-4">
+                        <div class="avatar-circle bg-success-soft text-success mb-3 mx-auto">
+                            <i class="bi bi-hdd fs-3"></i>
+                        </div>
+                        <h5 class="card-title text-body">Content & Storage</h5>
+                        <p class="card-text text-muted small">Data volume, media usage, and content type distribution.</p>
+                        <span class="btn btn-outline-success btn-sm mt-2">View Report <i class="bi bi-arrow-right"></i></span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

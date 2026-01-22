@@ -1,0 +1,170 @@
+@{
+    ViewData["Title"] = "Notes Analytics";
+}
+
+<section class="analytics-section">
+    <div class="container-fluid px-4">
+        <!-- Page Header -->
+        <div class="admin-page-header animate-fade-in">
+            <a asp-action="Index" class="back-link">
+                <i class="bi bi-arrow-left"></i> Back to Analytics
+            </a>
+            <h1 class="admin-page-title">
+                <i class="bi bi-journal-richtext"></i> Notes Analytics
+            </h1>
+            <p class="admin-page-subtitle">Notes trends, categories, and content insights</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon notes">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.TotalNotes</h3>
+                        <p class="stat-label">Total Notes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon active">
+                        <i class="bi bi-calendar-week"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.NotesThisWeek</h3>
+                        <p class="stat-label">Notes This Week</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon users">
+                        <i class="bi bi-calendar-month"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.NotesThisMonth</h3>
+                        <p class="stat-label">Notes This Month</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card animate-fade-in">
+                    <div class="stat-icon storage">
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@ViewBag.ImportantNotes</h3>
+                        <p class="stat-label">Important Notes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Important vs Normal Notes -->
+            <div class="col-lg-6">
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h5><i class="bi bi-star"></i> Important vs Normal Notes</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="ratio-display">
+                            <div class="ratio-item important">
+                                <div class="ratio-bar" style="width: @(ViewBag.TotalNotes > 0 ? (ViewBag.ImportantNotes * 100 / ViewBag.TotalNotes) : 0)%"></div>
+                                <div class="ratio-info">
+                                    <span class="ratio-label"><i class="bi bi-star-fill text-warning"></i> Important</span>
+                                    <span class="ratio-value">@ViewBag.ImportantNotes</span>
+                                </div>
+                            </div>
+                            <div class="ratio-item normal">
+                                <div class="ratio-bar" style="width: @(ViewBag.TotalNotes > 0 ? (ViewBag.NormalNotes * 100 / ViewBag.TotalNotes) : 0)%"></div>
+                                <div class="ratio-info">
+                                    <span class="ratio-label"><i class="bi bi-journal text-secondary"></i> Normal</span>
+                                    <span class="ratio-value">@ViewBag.NormalNotes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes with Images -->
+            <div class="col-lg-6">
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header">
+                        <h5><i class="bi bi-image"></i> Notes with Images</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="ratio-display">
+                            <div class="ratio-item with-image">
+                                <div class="ratio-bar" style="width: @(ViewBag.TotalNotes > 0 ? (ViewBag.NotesWithImages * 100 / ViewBag.TotalNotes) : 0)%"></div>
+                                <div class="ratio-info">
+                                    <span class="ratio-label"><i class="bi bi-image text-primary"></i> With Images</span>
+                                    <span class="ratio-value">@ViewBag.NotesWithImages</span>
+                                </div>
+                            </div>
+                            <div class="ratio-item without-image">
+                                <div class="ratio-bar" style="width: @(ViewBag.TotalNotes > 0 ? (ViewBag.NotesWithoutImages * 100 / ViewBag.TotalNotes) : 0)%"></div>
+                                <div class="ratio-info">
+                                    <span class="ratio-label"><i class="bi bi-file-text text-secondary"></i> Text Only</span>
+                                    <span class="ratio-value">@ViewBag.NotesWithoutImages</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Notes Trend -->
+            <div class="col-12">
+                <div class="dashboard-card animate-fade-in">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                        <h5><i class="bi bi-graph-up"></i> Notes Trend</h5>
+                        <div class="period-tabs">
+                            <a asp-action="Notes" asp-route-period="7days" class="period-tab @(ViewBag.CurrentPeriod == "7days" ? "active" : "")">7 Days</a>
+                            <a asp-action="Notes" asp-route-period="30days" class="period-tab @(ViewBag.CurrentPeriod == "30days" ? "active" : "")">30 Days</a>
+                            <a asp-action="Notes" asp-route-period="thismonth" class="period-tab @(ViewBag.CurrentPeriod == "thismonth" ? "active" : "")">This Month</a>
+                            <a asp-action="Notes" asp-route-period="thisyear" class="period-tab @(ViewBag.CurrentPeriod == "thisyear" ? "active" : "")">This Year</a>
+                            <a asp-action="Notes" asp-route-period="alltime" class="period-tab @(ViewBag.CurrentPeriod == "alltime" ? "active" : "")">All Time</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if (ViewBag.DailyNotesTrend != null && ((IEnumerable<dynamic>)ViewBag.DailyNotesTrend).Any())
+                        {
+                            <div class="trend-chart-scroll-container">
+                                <div class="trend-bars large">
+                                    @{
+                                        var maxNotes = ((IEnumerable<dynamic>)ViewBag.DailyNotesTrend).Max(x => (int)x.Count);
+                                        var format = ViewBag.DateFormat ?? "ddd";
+                                    }
+                                    @foreach (var item in ViewBag.DailyNotesTrend)
+                                    {
+                                        var height = maxNotes > 0 ? (item.Count * 100 / maxNotes) : 0;
+                                        var dateLabel = ((DateTime)item.Date).ToString(format);
+                                        <div class="trend-bar-item">
+                                            <div class="trend-bar notes-bar" style="height: @height%">
+                                                <span class="trend-count">@item.Count</span>
+                                            </div>
+                                            <span class="trend-label">@dateLabel</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="scroll-hint text-center mt-2">
+                                <i class="bi bi-arrow-left-right text-muted"></i>
+                                <small class="text-muted">Scroll horizontally to see more dates</small>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center">No notes created for @ViewBag.PeriodLabel.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

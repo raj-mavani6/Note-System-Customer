@@ -1,0 +1,164 @@
+@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<section class="admin-users-section">
+    <div class="container-fluid px-4">
+        <!-- Page Header -->
+        <div class="admin-page-header animate-fade-in">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="admin-page-title">
+                        <i class="bi bi-people"></i> Manage Users
+                    </h1>
+                    <p class="admin-page-subtitle">View and manage all registered users</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="/Users/Create" class="btn btn-primary">
+                        <i class="bi bi-plus-lg"></i> Add New User
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="mini-stat-card animate-fade-in">
+                    <i class="bi bi-people text-primary"></i>
+                    <div>
+                        <span class="stat-value">@Model.Count()</span>
+                        <span class="stat-label">Total Users</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mini-stat-card animate-fade-in">
+                    <i class="bi bi-check-circle text-success"></i>
+                    <div>
+                        <span class="stat-value">@Model.Count(u => u.IsActive)</span>
+                        <span class="stat-label">Active</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mini-stat-card animate-fade-in">
+                    <i class="bi bi-x-circle text-danger"></i>
+                    <div>
+                        <span class="stat-value">@Model.Count(u => !u.IsActive)</span>
+                        <span class="stat-label">Inactive</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="mini-stat-card animate-fade-in">
+                    <i class="bi bi-calendar-check text-info"></i>
+                    <div>
+                        <span class="stat-value">@Model.Count(u => u.CreatedAt.Date == DateTime.Today)</span>
+                        <span class="stat-label">Today</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="dashboard-card animate-fade-in">
+            <div class="card-header">
+                <h5><i class="bi bi-table"></i> All Users</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Notes</th>
+                                    <th>Status</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+                                        <td><strong>#@user.Id</strong></td>
+                                        <td>
+                                            <div class="user-info">
+                                                <div class="user-avatar">
+                                                    @if (!string.IsNullOrEmpty(user.ProfileImageUrl))
+                                                    {
+                                                        <img src="@user.ProfileImageUrl" alt="@user.FullName" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="bi bi-person"></i>
+                                                    }
+                                                </div>
+                                                <span>@user.FullName</span>
+                                            </div>
+                                        </td>
+                                        <td>@user.Email</td>
+                                        <td>@(user.Phone ?? "N/A")</td>
+                                        <td>
+                                            <span class="badge bg-primary">
+                                                @(user.Notes?.Count ?? 0) Notes
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @if (user.IsActive)
+                                            {
+                                                <span class="badge bg-success">
+                                                    <i class="bi bi-check-circle"></i> Active
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">
+                                                    <i class="bi bi-x-circle"></i> Inactive
+                                                </span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <span class="date-text">@user.CreatedAt.ToString("MMM dd, yyyy")</span>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <a href="/Users/Details/@user.Id" class="btn btn-sm btn-outline-primary" title="View">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="/Users/Edit/@user.Id" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <a href="/Users/Delete/@user.Id" class="btn btn-sm btn-outline-danger" title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-state">
+                        <i class="bi bi-people"></i>
+                        <h4>No Users Found</h4>
+                        <p>There are no registered users in the system.</p>
+                        <a href="/Users/Create" class="btn btn-primary">
+                            <i class="bi bi-plus-lg"></i> Add First User
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

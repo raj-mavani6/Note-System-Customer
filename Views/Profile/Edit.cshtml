@@ -1,0 +1,84 @@
+@model EditProfileViewModel
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<section class="admin-form-section">
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Page Header -->
+                <div class="form-header animate-fade-in">
+                    <a asp-action="Index" class="back-link">
+                        <i class="bi bi-arrow-left"></i> Back to Profile
+                    </a>
+                    <h1 class="admin-page-title">
+                        <i class="bi bi-pencil-square"></i> Edit Profile
+                    </h1>
+                    <p class="admin-page-subtitle">Update your profile information</p>
+                </div>
+
+                <!-- Edit Form -->
+                <div class="form-card animate-fade-in">
+                    <form asp-action="Edit" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="FullName" class="form-label">
+                                    <i class="bi bi-person"></i> Full Name <span class="required">*</span>
+                                </label>
+                                <input asp-for="FullName" class="form-control form-control-lg" placeholder="Enter your full name">
+                                <span asp-validation-for="FullName" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="Email" class="form-label">
+                                    <i class="bi bi-envelope"></i> Email <span class="required">*</span>
+                                </label>
+                                <input asp-for="Email" class="form-control form-control-lg" placeholder="Enter your email">
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="ProfileImageUrl" class="form-label">
+                                <i class="bi bi-image"></i> Profile Image URL (Optional)
+                            </label>
+                            <input asp-for="ProfileImageUrl" class="form-control" placeholder="https://example.com/your-image.jpg">
+                            <small class="form-text text-muted">Enter a URL to your profile image</small>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.ProfileImageUrl))
+                        {
+                            <div class="mb-4">
+                                <label class="form-label">Current Image</label>
+                                <div class="image-preview">
+                                    <img src="@Model.ProfileImageUrl" alt="Profile Image" />
+                                </div>
+                            </div>
+                        }
+
+                        <div class="form-buttons">
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-x-lg"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-check-lg"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
+            btn.disabled = true;
+        });
+    </script>
+}

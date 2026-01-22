@@ -1,0 +1,130 @@
+@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="auth-section">
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-90">
+            <div class="col-lg-5 col-md-7">
+                <div class="auth-card animate-fade-in">
+                    <!-- Logo -->
+                    <div class="auth-logo">
+                        <i class="bi bi-journal-richtext"></i>
+                        <h2>Notes<span class="text-accent">System</span></h2>
+                    </div>
+                    
+                    <!-- Title -->
+                    <div class="auth-header">
+                        <h3>Create Account</h3>
+                        <p>Join us and start organizing your notes</p>
+                    </div>
+
+                    <!-- Register Form -->
+                    <form asp-action="Register" method="post" class="auth-form">
+                        @Html.AntiForgeryToken()
+
+                        <!-- Validation Summary -->
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                @Html.ValidationSummary(false, "", new { @class = "mb-0" })
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <!-- Full Name Field -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="FullName" type="text" class="form-control" id="fullName" placeholder="Enter your full name">
+                            <label for="fullName"><i class="bi bi-person"></i> Full Name</label>
+                            <span asp-validation-for="FullName" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Enter your email">
+                            <label for="email"><i class="bi bi-envelope"></i> Email Address</label>
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Phone Field -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Phone" type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
+                            <label for="phone"><i class="bi bi-telephone"></i> Phone Number</label>
+                            <span asp-validation-for="Phone" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Create a password">
+                            <label for="password"><i class="bi bi-lock"></i> Password</label>
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Confirm Password Field -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
+                            <label for="confirmPassword"><i class="bi bi-lock-fill"></i> Confirm Password</label>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Terms Checkbox -->
+                        <div class="form-check mb-4">
+                            <input type="checkbox" class="form-check-input" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                I agree to the <a href="#" class="terms-link">Terms of Service</a> and 
+                                <a href="#" class="terms-link">Privacy Policy</a>
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="bi bi-person-plus"></i> Create Account
+                        </button>
+
+                        <!-- Divider -->
+                        <div class="auth-divider">
+                            <span>or</span>
+                        </div>
+
+                        <!-- Login Link -->
+                        <div class="text-center">
+                            <p class="mb-0">Already have an account? 
+                                <a href="/Account/Login" class="register-link">Sign In</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Password strength indicator
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strength = calculatePasswordStrength(password);
+            // Add visual feedback here if needed
+        });
+
+        function calculatePasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (password.length >= 10) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            return strength;
+        }
+
+        // Form submission animation
+        document.querySelector('.auth-form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Creating Account...';
+            btn.disabled = true;
+        });
+    </script>
+}

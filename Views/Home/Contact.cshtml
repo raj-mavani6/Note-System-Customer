@@ -1,0 +1,210 @@
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<section class="contact-hero-section">
+    <div class="container">
+        <div class="contact-hero-content animate-fade-in">
+            <span class="hero-badge">Contact Us</span>
+            <h1 class="hero-title">Let's Start a <span class="text-gradient">Conversation</span></h1>
+            <p class="hero-description">Have a question, feedback, or just want to say hello? We'd love to hear from you.</p>
+        </div>
+    </div>
+</section>
+
+<section class="contact-main-section">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Contact Info Cards -->
+            <div class="col-lg-5">
+                <div class="contact-info-wrapper animate-fade-in">
+                    <h3>Get in Touch</h3>
+                    <p class="info-subtitle">Choose your preferred way to reach us</p>
+
+                    <div class="contact-cards">
+                        <div class="contact-card">
+                            <div class="card-icon email">
+                                <i class="bi bi-envelope-fill"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Email Us</h4>
+                                <p>support@notessystem.com</p>
+                                <span class="response-time">We reply within 24 hours</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="card-icon phone">
+                                <i class="bi bi-telephone-fill"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Call Us</h4>
+                                <p>+91 98765 43210</p>
+                                <span class="response-time">Mon - Fri, 9AM - 6PM IST</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="card-icon location">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4>Visit Us</h4>
+                                <p>123 Tech Park, Ahmedabad</p>
+                                <span class="response-time">Gujarat, India 380015</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <h4>Follow Us</h4>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon twitter"><i class="bi bi-twitter-x"></i></a>
+                            <a href="#" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="social-icon linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="col-lg-7">
+                <div class="contact-form-wrapper animate-fade-in">
+                    <h3>Send us a Message</h3>
+                    <p class="form-subtitle">Fill out the form below and we'll get back to you shortly</p>
+
+                    <form class="contact-form" id="contactForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">
+                                        <i class="bi bi-person"></i> Your Name
+                                    </label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">
+                                        <i class="bi bi-envelope"></i> Email Address
+                                    </label>
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="john@example.com" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">
+                                <i class="bi bi-chat-left-text"></i> Subject
+                            </label>
+                            <input type="text" id="subject" name="subject" class="form-control" placeholder="How can we help?" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">
+                                <i class="bi bi-pencil"></i> Your Message
+                            </label>
+                            <textarea id="message" name="message" class="form-control" rows="5" placeholder="Write your message here..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <i class="bi bi-send-fill"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact-faq-section">
+    <div class="container">
+        <div class="section-header text-center animate-fade-in">
+            <span class="section-badge">FAQ</span>
+            <h2>Frequently Asked Questions</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="faq-list animate-fade-in">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <i class="bi bi-question-circle"></i>
+                            <span>How do I create a new note?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Simply log in to your account, go to the Notes section, and click the "Create New Note" button. You can add a title, content, and even attach images to your notes.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <i class="bi bi-question-circle"></i>
+                            <span>Is my data secure?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! We use industry-standard encryption to protect your data. Your notes are stored securely and only you have access to them.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <i class="bi bi-question-circle"></i>
+                            <span>Can I access my notes from multiple devices?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! Your notes are synced to the cloud, so you can access them from any device with an internet connection. Just log in to your account.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <i class="bi bi-question-circle"></i>
+                            <span>How do I reset my password?</span>
+                            <i class="bi bi-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Go to your Profile page and click on "Change Password". You'll need to enter your current password and then set a new one.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('.btn-submit');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+            btn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                btn.innerHTML = '<i class="bi bi-check-lg"></i> Message Sent!';
+                btn.classList.add('success');
+                this.reset();
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="bi bi-send-fill"></i> Send Message';
+                    btn.disabled = false;
+                    btn.classList.remove('success');
+                }, 3000);
+            }, 1500);
+        });
+    </script>
+}

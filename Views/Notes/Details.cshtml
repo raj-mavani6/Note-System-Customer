@@ -1,0 +1,109 @@
+@model Note
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<section class="notes-form-section">
+    <div class="container-fluid px-4">
+        <!-- Page Header -->
+        <div class="form-header animate-fade-in">
+            <a asp-action="Index" class="back-link">
+                <i class="bi bi-arrow-left"></i> Back to Notes
+            </a>
+            <h1 class="form-title">
+                <i class="bi bi-journal-text"></i> View Note
+            </h1>
+            <p class="form-subtitle">Note details and content</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Column: Content -->
+            <div class="col-lg-7">
+                <div class="editor-card animate-fade-in">
+                    <div class="editor-header">
+                        <h5><i class="bi bi-text-paragraph"></i> Content</h5>
+                    </div>
+                    <div class="editor-body">
+                        <div class="content-display">
+                            @Model.Content
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Details -->
+            <div class="col-lg-5">
+                <div class="details-card animate-fade-in">
+                    <!-- Title -->
+                    <div class="detail-section">
+                        <label class="detail-label">
+                            <i class="bi bi-type"></i> Title
+                        </label>
+                        <div class="detail-value title-value">
+                            @Model.Title
+                        </div>
+                    </div>
+
+                    <!-- Image -->
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <div class="detail-section">
+                            <label class="detail-label">
+                                <i class="bi bi-image"></i> Image
+                            </label>
+                            <div class="image-preview-large">
+                                <img src="@Model.ImageUrl" alt="@Model.Title" />
+                            </div>
+                        </div>
+                    }
+
+                    <!-- Important Status -->
+                    <div class="detail-section">
+                        <label class="detail-label">
+                            <i class="bi bi-star"></i> Importance
+                        </label>
+                        @if (Model.IsImportant)
+                        {
+                            <div class="importance-badge important">
+                                <i class="bi bi-star-fill"></i> Marked as Important
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="importance-badge normal">
+                                <i class="bi bi-star"></i> Normal Priority
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Note Info -->
+                    <div class="detail-section">
+                        <div class="note-meta-info">
+                            <div class="meta-item">
+                                <i class="bi bi-calendar3"></i>
+                                <span>Created: @Model.CreatedAt.ToString("MMM dd, yyyy hh:mm tt")</span>
+                            </div>
+                            @if (Model.UpdatedAt.HasValue)
+                            {
+                                <div class="meta-item">
+                                    <i class="bi bi-clock-history"></i>
+                                    <span>Updated: @Model.UpdatedAt.Value.ToString("MMM dd, yyyy hh:mm tt")</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="detail-section buttons-section">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-lg w-100 mb-3">
+                            <i class="bi bi-pencil"></i> Edit Note
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-lg w-100">
+                            <i class="bi bi-trash"></i> Delete Note
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

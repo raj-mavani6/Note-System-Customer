@@ -1,0 +1,197 @@
+@model Note
+@{
+    ViewData["Title"] = "Edit Note";
+}
+
+<section class="notes-form-section">
+    <div class="container-fluid px-4">
+        <!-- Page Header -->
+        <div class="form-header animate-fade-in">
+            <a asp-action="Index" class="back-link">
+                <i class="bi bi-arrow-left"></i> Back to Notes
+            </a>
+            <h1 class="form-title">
+                <i class="bi bi-pencil-square"></i> Edit Note
+            </h1>
+            <p class="form-subtitle">Update your note details</p>
+        </div>
+
+        <!-- Edit Form -->
+        <form asp-action="Edit" method="post" class="notes-editor-form" id="noteForm">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row g-4">
+                <!-- Left Column: Content -->
+                <div class="col-lg-7">
+                    <div class="editor-card animate-fade-in">
+                        <div class="editor-header">
+                            <h5><i class="bi bi-text-paragraph"></i> Content <span class="required">*</span></h5>
+                        </div>
+
+                        <!-- Rich Text Toolbar -->
+                        <div class="editor-toolbar">
+                            <div class="toolbar-group">
+                                <button type="button" class="toolbar-btn" data-command="bold" title="Bold">
+                                    <i class="bi bi-type-bold"></i>
+                                </button>
+                                <button type="button" class="toolbar-btn" data-command="italic" title="Italic">
+                                    <i class="bi bi-type-italic"></i>
+                                </button>
+                                <button type="button" class="toolbar-btn" data-command="underline" title="Underline">
+                                    <i class="bi bi-type-underline"></i>
+                                </button>
+                            </div>
+                            <div class="toolbar-divider"></div>
+                            <div class="toolbar-group">
+                                <button type="button" class="toolbar-btn" data-command="justifyLeft" title="Align Left">
+                                    <i class="bi bi-text-left"></i>
+                                </button>
+                                <button type="button" class="toolbar-btn" data-command="justifyCenter" title="Center">
+                                    <i class="bi bi-text-center"></i>
+                                </button>
+                                <button type="button" class="toolbar-btn" data-command="justifyRight" title="Align Right">
+                                    <i class="bi bi-text-right"></i>
+                                </button>
+                                <button type="button" class="toolbar-btn" data-command="justifyFull" title="Justify">
+                                    <i class="bi bi-justify"></i>
+                                </button>
+                            </div>
+                            <div class="toolbar-divider"></div>
+                            <div class="toolbar-group">
+                                <button type="button" class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">
+                                    <i class="bi bi-list-ul"></i>
+                                </button>
+                                <button type="button" class="toolbar-btn" data-command="insertOrderedList" title="Numbered List">
+                                    <i class="bi bi-list-ol"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="editor-body">
+                            <div id="contentEditor" class="content-editor-rich" contenteditable="true" placeholder="Write your note content here...">@Html.Raw(Model.Content)</div>
+                            <input type="hidden" asp-for="Content" id="hiddenContent" />
+                            <span asp-validation-for="Content" class="text-danger small"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Details -->
+                <div class="col-lg-5">
+                    <div class="details-card animate-fade-in">
+                        <!-- Title -->
+                        <div class="detail-section">
+                            <label asp-for="Title" class="detail-label">
+                                <i class="bi bi-type"></i> Title <span class="required">*</span>
+                            </label>
+                            <input asp-for="Title" class="form-control form-control-lg" placeholder="Enter note title">
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Image URL -->
+                        <div class="detail-section">
+                            <label asp-for="ImageUrl" class="detail-label">
+                                <i class="bi bi-image"></i> Image URL (Optional)
+                            </label>
+                            <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/image.jpg">
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <div class="image-preview-small mt-2">
+                                    <img src="@Model.ImageUrl" alt="@Model.Title" />
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Mark as Important -->
+                        <div class="detail-section">
+                            <div class="important-toggle">
+                                <label class="detail-label mb-2">
+                                    <i class="bi bi-star"></i> Mark as Important
+                                </label>
+                                <div class="toggle-switch">
+                                    <input asp-for="IsImportant" type="checkbox" id="isImportant" class="toggle-input">
+                                    <label for="isImportant" class="toggle-label">
+                                        <span class="toggle-text-off">No</span>
+                                        <span class="toggle-text-on">Yes</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Note Info -->
+                        <div class="detail-section">
+                            <div class="note-meta-info">
+                                <div class="meta-item">
+                                    <i class="bi bi-calendar3"></i>
+                                    <span>Created: @Model.CreatedAt.ToString("MMM dd, yyyy")</span>
+                                </div>
+                                @if (Model.UpdatedAt.HasValue)
+                                {
+                                    <div class="meta-item">
+                                        <i class="bi bi-clock-history"></i>
+                                        <span>Updated: @Model.UpdatedAt.Value.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="detail-section buttons-section">
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg w-100 mb-3">
+                                <i class="bi bi-x-lg"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="bi bi-check-lg"></i> Save Changes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Rich Text Editor functionality
+        const editor = document.getElementById('contentEditor');
+        const hiddenContent = document.getElementById('hiddenContent');
+        const toolbarBtns = document.querySelectorAll('.toolbar-btn');
+
+        // Toolbar button click handlers
+        toolbarBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const command = this.dataset.command;
+                document.execCommand(command, false, null);
+                editor.focus();
+                updateToolbarState();
+            });
+        });
+
+        // Update toolbar button states
+        function updateToolbarState() {
+            toolbarBtns.forEach(btn => {
+                const command = btn.dataset.command;
+                if (document.queryCommandState(command)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // Update toolbar state on selection change
+        editor.addEventListener('keyup', updateToolbarState);
+        editor.addEventListener('mouseup', updateToolbarState);
+
+        // Sync content to hidden input before form submit
+        document.getElementById('noteForm').addEventListener('submit', function(e) {
+            hiddenContent.value = editor.innerHTML;
+
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
+            btn.disabled = true;
+        });
+    </script>
+}

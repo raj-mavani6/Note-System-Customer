@@ -1,0 +1,118 @@
+@model IEnumerable<Note>
+@{
+    ViewData["Title"] = "My Notes";
+}
+
+<section class="notes-section">
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header animate-fade-in">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="page-title">
+                        <i class="bi bi-journal-text"></i> My Notes
+                    </h1>
+                    <p class="page-subtitle">Manage and organize all your notes in one place</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="/Notes/Create" class="btn btn-primary btn-lg">
+                        <i class="bi bi-plus-lg"></i> Create New Note
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Stats -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="mini-stat-card animate-fade-in">
+                    <i class="bi bi-journal-text text-primary"></i>
+                    <div>
+                        <span class="stat-value">@Model.Count()</span>
+                        <span class="stat-label">Total Notes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mini-stat-card animate-fade-in">
+                    <i class="bi bi-star-fill text-warning"></i>
+                    <div>
+                        <span class="stat-value">@Model.Count(n => n.IsImportant)</span>
+                        <span class="stat-label">Important</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mini-stat-card animate-fade-in">
+                    <i class="bi bi-calendar-check text-success"></i>
+                    <div>
+                        <span class="stat-value">@Model.Count(n => n.CreatedAt.Date == DateTime.Today)</span>
+                        <span class="stat-label">Today</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Grid -->
+        @if (Model.Any())
+        {
+            <div class="row g-4">
+                @foreach (var note in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="note-card animate-fade-in @(note.IsImportant ? "important" : "")">
+                            @if (!string.IsNullOrEmpty(note.ImageUrl))
+                            {
+                                <div class="note-image">
+                                    <img src="@note.ImageUrl" alt="@note.Title" />
+                                </div>
+                            }
+                            <div class="note-content">
+                                <div class="note-header">
+                                    <h4 class="note-title">@note.Title</h4>
+                                    @if (note.IsImportant)
+                                    {
+                                        <span class="important-badge">
+                                            <i class="bi bi-star-fill"></i>
+                                        </span>
+                                    }
+                                </div>
+                                <p class="note-text">@(note.Content.Length > 120 ? note.Content.Substring(0, 120) + "..." : note.Content)</p>
+                                <div class="note-meta">
+                                    <span class="note-date">
+                                        <i class="bi bi-calendar3"></i> @note.CreatedAt.ToString("MMM dd, yyyy")
+                                    </span>
+                                </div>
+                                <div class="note-actions">
+                                    <a href="/Notes/Details/@note.Id" class="btn btn-sm btn-outline-primary" title="View Details">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="/Notes/Edit/@note.Id" class="btn btn-sm btn-outline-secondary" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="/Notes/Delete/@note.Id" class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <!-- Empty State -->
+            <div class="empty-state animate-fade-in">
+                <div class="empty-icon">
+                    <i class="bi bi-journal-x"></i>
+                </div>
+                <h3>No Notes Yet</h3>
+                <p>Start capturing your thoughts and ideas by creating your first note.</p>
+                <a href="/Notes/Create" class="btn btn-primary btn-lg">
+                    <i class="bi bi-plus-lg"></i> Create Your First Note
+                </a>
+            </div>
+        }
+    </div>
+</section>

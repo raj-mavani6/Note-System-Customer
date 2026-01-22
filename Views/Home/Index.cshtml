@@ -1,0 +1,158 @@
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center min-vh-75">
+            <div class="col-lg-6 hero-content">
+                <h1 class="hero-title animate-fade-in">
+                    Organize Your <span class="text-accent">Thoughts</span>
+                    <br>With Elegance
+                </h1>
+                <p class="hero-subtitle animate-fade-in-delay">
+                    A premium notes management system designed for those who value
+                    simplicity and sophistication. Capture ideas, organize thoughts,
+                    and boost your productivity.
+                </p>
+                <div class="hero-buttons animate-fade-in-delay-2">
+                    @if (ViewBag.IsLoggedIn != null && ViewBag.IsLoggedIn == true)
+                    {
+                        <a href="/Notes" class="btn btn-primary btn-lg">
+                            <i class="bi bi-journal-text"></i> My Notes
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Account/Register" class="btn btn-primary btn-lg">
+                            <i class="bi bi-rocket-takeoff"></i> Get Started Free
+                        </a>
+                        <a href="/Account/Login" class="btn btn-outline-secondary btn-lg ms-3">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6 hero-image animate-float">
+                <div class="hero-illustration">
+                    <i class="bi bi-journal-richtext"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-wave">
+        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title">Why Choose <span class="text-accent">NotesSystem</span></h2>
+            <p class="section-subtitle">Experience the perfect blend of functionality and design</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Feature 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-cloud-check"></i>
+                    </div>
+                    <h4 class="feature-title">Cloud Storage</h4>
+                    <p class="feature-description">
+                        Your notes are securely stored in the cloud, accessible from anywhere, anytime.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h4 class="feature-title">Secure & Private</h4>
+                    <p class="feature-description">
+                        Your data is protected with industry-standard security measures.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-image"></i>
+                    </div>
+                    <h4 class="feature-title">Image Support</h4>
+                    <p class="feature-description">
+                        Attach images to your notes to make them more expressive and memorable.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-search"></i>
+                    </div>
+                    <h4 class="feature-title">Quick Search</h4>
+                    <p class="feature-description">
+                        Find any note instantly with our powerful search functionality.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-palette"></i>
+                    </div>
+                    <h4 class="feature-title">Beautiful Design</h4>
+                    <p class="feature-description">
+                        A premium, elegant interface that makes note-taking a pleasure.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-phone"></i>
+                    </div>
+                    <h4 class="feature-title">Responsive</h4>
+                    <p class="feature-description">
+                        Works perfectly on desktop, tablet, and mobile devices.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-card">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h3 class="cta-title">Ready to Get Started?</h3>
+                    <p class="cta-subtitle">Join thousands of users who trust NotesSystem for their daily notes.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a asp-controller="Notes" asp-action="Create" class="btn btn-light btn-lg">
+                        <i class="bi bi-plus-circle"></i> Create Notes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

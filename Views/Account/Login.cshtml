@@ -1,0 +1,92 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="auth-section">
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-80">
+            <div class="col-lg-5 col-md-7">
+                <div class="auth-card animate-fade-in">
+                    <!-- Logo -->
+                    <div class="auth-logo">
+                        <i class="bi bi-journal-richtext"></i>
+                        <h2>Notes<span class="text-accent">System</span></h2>
+                    </div>
+                    
+                    <!-- Title -->
+                    <div class="auth-header">
+                        <h3>Welcome Back!</h3>
+                        <p>Sign in to continue to your notes</p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form asp-action="Login" method="post" class="auth-form">
+                        @Html.AntiForgeryToken()
+
+                        <!-- Validation Summary -->
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                @Html.ValidationSummary(false, "", new { @class = "mb-0" })
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <!-- Email Field -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Enter your email">
+                            <label for="email"><i class="bi bi-envelope"></i> Email Address</label>
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="form-floating mb-3">
+                            <input asp-for="Password" type="password" class="form-control" id="password" placeholder="Enter your password">
+                            <label for="password"><i class="bi bi-lock"></i> Password</label>
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Remember Me & Forgot Password -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="bi bi-box-arrow-in-right"></i> Sign In
+                        </button>
+
+                        <!-- Divider -->
+                        <div class="auth-divider">
+                            <span>or</span>
+                        </div>
+
+                        <!-- Register Link -->
+                        <div class="text-center">
+                            <p class="mb-0">Don't have an account? 
+                                <a href="/Account/Register" class="register-link">Create Account</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Form validation animation
+        document.querySelector('.auth-form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Signing In...';
+            btn.disabled = true;
+        });
+    </script>
+}
